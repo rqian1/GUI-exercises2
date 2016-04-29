@@ -1,0 +1,73 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.ComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class MetricConversion implements ActionListener{
+	private static JLabel convertString,convertprompt;
+	private static JFrame frame;
+	private static JPanel panel;
+	private static JComboBox convert;
+	
+	MetricConversion(){
+		frame=new JFrame("Rui Qian");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		panel=new JPanel();
+		panel.setLayout(new BoxLayout(panel,BoxLayout.PAGE_AXIS));
+		panel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+		frame.setVisible(true);
+
+		convertprompt=new JLabel("Select a conversion type:");
+		convertprompt.setAlignmentX(JLabel.LEFT_ALIGNMENT);
+		panel.add(convertprompt);
+		//stop
+		String[] convertsStrings={"","inches to centimeters", "feet to meters", "gallon to liters", "pound to kilograms"};
+		convert=new JComboBox(convertsStrings);
+		convert.setAlignmentX(JComboBox.LEFT_ALIGNMENT);
+		convert.setSelectedIndex(0);
+		convert.addActionListener(this);
+		panel.add(convert);
+		convertString=new JLabel(" ");
+		panel.add(convertString);
+
+		frame.setContentPane(panel);
+		frame.pack();
+		frame.setVisible(true);
+
+	}
+	public static void main(String[] args){
+		javax.swing.SwingUtilities.invokeLater(new Runnable(){
+			public void run(){
+				runthis();
+			}
+		});
+	}
+	private static void runthis(){
+		JFrame.setDefaultLookAndFeelDecorated(true);
+		MetricConversion name=new MetricConversion();
+	}
+	public void actionPerformed(ActionEvent e) {
+		JComboBox comboBox=(JComboBox)e.getSource();
+		String conversion=(String)comboBox.getSelectedItem();
+		String event=e.getActionCommand();
+		if (conversion.equals("inches to centimeters")){
+			convertString.setText("1 inch=2.54 centimeters");
+		}else if(conversion.equals("feet to meters")){
+			convertString.setText("1 foot=.3048");
+		}else if (conversion.equals("gallon to liters")){
+			convertString.setText("1 gallon=4.5461 liters");
+		}else if(conversion.equals("pound to kilograms")){
+			convertString.setText("1 pound=.4536 kilograms");
+		}else if(conversion.equals("")){
+			convertString.setText(" ");
+			}
+	}
+}
